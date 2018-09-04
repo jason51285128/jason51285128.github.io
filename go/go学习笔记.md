@@ -17,7 +17,7 @@ go的工作区从上到下分为workplace、repository、package，其中workpla
 
 一个workplace下，只包含bin和src目录，其中bin中包含由go工具生成的可执行文件，如图所示
 
-![go工程目录结构](./media/go-1.png)
+![go工程目录结构](media/go-1.png)
 
 代码的结构按照go的工作区规则部署，就可以使用go install, build等工具，进行构建
 
@@ -116,9 +116,9 @@ go程序以包为单位组织程序，包是最小的编译单元。程序的执
 	
 	2.	**数字类型：** 整型 int 和浮点型 float32、float64，Go 语言支持整型和浮点型数字，并且原生支持复数，其中位的运算采用补码。
 	
-		![数字类型1](./media/go-2.png)
-		![数字类型2](./media/go-3.png)
-		![数字类型3](./media/go-4.png)
+		![数字类型1](media/go-2.png)
+		![数字类型2](media/go-3.png)
+		![数字类型3](media/go-4.png)
 		
 	3.	**字符串类型：**字符串就是一串固定长度的字符连接起来的字符序列。Go的字符串是由单个字节连接起来的。Go语言的字符串的字节使用UTF-8编码标识Unicode文本。
 	
