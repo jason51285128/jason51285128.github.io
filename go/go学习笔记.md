@@ -292,6 +292,42 @@ go程序以包为单位组织程序，包是最小的编译单元。程序的执
 
 --------
 
+### map
+
+map为无序“key-value”，存储结构，底层实现为hash表
+
+1.	声明
+	
+	```go
+	var a map[string]string //一个空的map，在向其中添加数据前，需要使用初始化
+	var a_init map[string]string{} //声明和初始化
+	var b map[string]string = make(map[string]string)
+	c := make(map[string]string)
+	```
+	
+1.	添加、便利、删除数据
+
+	```go
+	a := make(map[string]string)
+	
+	a["hello1"] = "world1"
+	a["hello2"] = "world2"
+	a["hello3"] = "world3"
+	
+	for b := range a {
+		fmt.println(a[b])
+	}
+	
+	if v, ok = a["if_exist"]; ok {
+		fmt.println(a["if_exist"])
+	}
+	
+	delete(a, "hello3")
+	
+	```
+
+--------
+
 ### 常量
 
 在编译期间，就能确定的值，一旦定义就不能改变
