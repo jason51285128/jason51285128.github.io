@@ -76,7 +76,34 @@ go程序以包为单位组织程序，包是最小的编译单元。程序的执
 	使用**:=**，来完成变量的声明和初始化，但是必须满足下面两个条件：
 	
 	*	:= 操作符左边的所有变量都必须有初始值，否则抛出异常
-	*	:= 操作符的左边至少有一个变量是尚未声明的，否则抛出异常
+	*	:= 操作符左边的变量，全部会被当作新的变量，且会覆盖同名的变量
+		
+		````go
+		func add(a, b uint32) (bool, uint32) {
+			return true, a + b
+		}
+
+		func main() {
+			var a uint32
+			//“:=”会将左边的变量当作新的变量，if中表达式中的变量作用于整个if-else， 且覆盖外层变量
+			if e, a := add(1, 2); !e {
+				fmt.Println("a: ", a)
+			} else {
+				fmt.Println("a: ", a)
+				if true {
+					fmt.Println("a in else-if: ", a)
+				}
+			}
+			fmt.Println("a: ", a)
+		}
+		
+		//输出
+		
+		a:  3
+		a in else-if:  3
+		a:  0
+		````
+	
 	*	只能在函数内部
 	
 1.	变量的作用域
