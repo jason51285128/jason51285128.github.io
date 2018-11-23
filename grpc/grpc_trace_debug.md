@@ -5,7 +5,7 @@ grpc是基于http2.0的，设置以下环境变量：
 ````shell
 export GRPC_TRACE=all
 export GRPC_VERBOSITY=DEBUG
-GODEBUG=http2debug=2
+export GODEBUG=http2debug=2
 ````
 设置后，grpc会以日志的形式，输出各组件的详细工作情况，包括报文何如组装，数据如何序列化，收到的报文
 等等，碰到grpc疑难杂症时，可以用该方法debug。
