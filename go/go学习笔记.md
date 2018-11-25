@@ -76,7 +76,34 @@ go程序以包为单位组织程序，包是最小的编译单元。程序的执
 	使用**:=**，来完成变量的声明和初始化，但是必须满足下面两个条件：
 	
 	*	:= 操作符左边的所有变量都必须有初始值，否则抛出异常
-	*	:= 操作符的左边至少有一个变量是尚未声明的，否则抛出异常
+	*	:= 操作符左边的变量，全部会被当作新的变量，且会覆盖同名的变量
+		
+		````go
+		func add(a, b uint32) (bool, uint32) {
+			return true, a + b
+		}
+
+		func main() {
+			var a uint32
+			//“:=”会将左边的变量当作新的变量，if中表达式中的变量作用于整个if-else， 且覆盖外层变量
+			if e, a := add(1, 2); !e {
+				fmt.Println("a: ", a)
+			} else {
+				fmt.Println("a: ", a)
+				if true {
+					fmt.Println("a in else-if: ", a)
+				}
+			}
+			fmt.Println("a: ", a)
+		}
+		
+		//输出
+		
+		a:  3
+		a in else-if:  3
+		a:  0
+		````
+	
 	*	只能在函数内部
 	
 1.	变量的作用域
@@ -136,7 +163,7 @@ go程序以包为单位组织程序，包是最小的编译单元。程序的执
 			var b = [5]int{1, 2, 3, 4, 5}
 			
 			//define and discard len
-			var c = []int{1, 2, 3, 4, 5}
+			var c = [...]int{1, 2, 3, 4, 5}
 			```
 			
 		*	结构化类型(struct)
@@ -151,7 +178,181 @@ go程序以包为单位组织程序，包是最小的编译单元。程序的执
 		
 		*	Map 类型
 	
+--------
+
+### 数组和切片
+
+#### 数组
+
+数组为固定长度的连续内存。
+
+1.	申明
+
+	```go
+	var a [3]int //申明容量为3的数组，被填充全0
+	var b [3]int = {1, 2, 3} //申明并初始化
+	c := [3]int{1, 2, 3} //简短申明
+	d := [3]int{1} //简短申明，部分初始化
+	e := [...]int{1, 2, 3} //简短声明，由编译器决定长度
+	```
 	
+1.	数组时值类型，赋值和传参都是拷贝
+
+1.	数组的长度时固定的，可以由内置方法len获得
+
+1.	使用range（返还index，value）遍历数组
+
+	```go
+	package main
+
+	import "fmt"
+
+	func main() {  
+		a := [...]float64{67.7, 89.8, 21, 78}
+		sum := float64(0)
+		for i, v := range a {//range returns both the index and value
+			fmt.Printf("%d the element of a is %.2f\n", i, v)
+			sum += v
+		}
+		fmt.Println("\nsum of all elements of a",sum)
+	}
+	```
+	
+1.	多维数组
+
+	```go
+	package main
+
+	import (  
+		"fmt"
+	)
+	
+	func printarray(a [3][2]string) {  
+		for _, v1 := range a {
+			for _, v2 := range v1 {
+				fmt.Printf("%s ", v2)
+			}
+			fmt.Printf("\n")
+		}
+	}
+	
+	func main() {  
+		a := [3][2]string{
+			{"lion", "tiger"},
+			{"cat", "dog"},
+			{"pigeon", "peacock"}, //this comma is necessary. The compiler will complain if you omit this comma
+		}
+		printarray(a)
+		var b [3][2]string
+		b[0][0] = "apple"
+		b[0][1] = "samsung"
+		b[1][0] = "microsoft"
+		b[1][1] = "google"
+		b[2][0] = "AT&T"
+		b[2][1] = "T-Mobile"
+		fmt.Printf("\n")
+		printarray(b)
+	}
+	```
+	
+#### 切片
+
+切片时对数组的引用，本身时引用类型
+
+1.	声明
+
+	```go
+	var a []int //一个空的切片
+	var b [4]int = {1, 2, 3, 4}
+	var c []int = b[1:3] //切片，从b[1,3)
+	d := []int{1, 3, 4} //创建一个数组，并且返还其切片
+	i := make([]int, 5, 5) //使用make创建切片，原型：func make([]T, len, cap) []T，  容量可选，默认等于长度
+	```
+	
+1.	切片时引用类型，因此赋值和传参，都将会修改对应数据
+
+1.	切片的长度和容量
+
+	长度：切片中元素的个数，可以使用len函数获得
+	
+	容量：从切片的起始元素开始到其底层数组中的最后一个元素的个数，使用函数cap获得
+	
+1.	追加元素到切片，append， 原型：append(s []T, x ...T) []T
+
+	到元素的个数，超过切片底层数组的容量时，切片会重新申请容量更大的数组（原数组容量的2倍）
+	并且把原来的数组拷贝到新的数组，原来的数组由GC接管
+	
+	```go
+	animal := []string{"dog", "cat"}
+	
+	append(animal, "duck"）
+	
+	fruit := []string{"apple", "orange"}
+	
+	append(animal, fruit...) //将fruit追加到animal
+	```
+	
+1.	多维切片
+
+	```go
+	package main
+
+	import (  
+		"fmt"
+	)
+	
+	
+	func main() {  
+		pls := [][]string {
+				{"C", "C++"},
+				{"JavaScript"},
+				{"Go", "Rust"},
+				}
+		for _, v1 := range pls {
+			for _, v2 := range v1 {
+				fmt.Printf("%s ", v2)
+			}
+			fmt.Printf("\n")
+		}
+	}
+	```
+
+--------
+
+### map
+
+map为无序“key-value”，存储结构，底层实现为hash表
+
+1.	声明
+	
+	```go
+	var a map[string]string //一个空的map，在向其中添加数据前，需要使用初始化
+	var a_init map[string]string{} //声明和初始化
+	var b map[string]string = make(map[string]string)
+	c := make(map[string]string)
+	```
+	
+1.	添加、便利、删除数据
+
+	```go
+	a := make(map[string]string)
+	
+	a["hello1"] = "world1"
+	a["hello2"] = "world2"
+	a["hello3"] = "world3"
+	
+	for b := range a {
+		fmt.println(a[b])
+	}
+	
+	if v, ok = a["if_exist"]; ok {
+		fmt.println(a["if_exist"])
+	}
+	
+	delete(a, "hello3")
+	
+	```
+
 --------
 
 ### 常量
@@ -444,8 +645,162 @@ func main() {
 
 ### 并发编程
 
+go的并发实现可以理解为多线程（goroutine， 轻量级线程），goroutine之间
+通过消息队列进行通信， main函数相当于主goroutine， 使用“go”关键字创建
+新的goroutine
 
+#### goroutine
 
+```go
+
+package main
+import (
+"fmt"
+"time"	
+)
+ 
+func main() {
+	for i:=1;i<10;i++ {
+		go func(i int) { //创建新的goroutine
+			fmt.Println(i)
+		}(i)
+	}
+	//暂停一会，保证打印全部结束
+	time.Sleep(1e9)
+}
+```
+
+#### channel
+
+相当于消息队列，用于roroutine之间通信
+
+1.	声明
+
+	```go
+	var ch chan int = make(chan int)
+	
+	ch1 := make(chan int)
+	```
+
+1.	无缓冲channel
+
+	默认使用make创建的channel是无缓冲的，无缓冲channel不能存储消息，只能负责消息
+	流通，并且读写都是阻塞的：
+	
+	*	从无缓冲channel读数据，必须要有数据流进来才可以，否则阻塞当前goroutine
+
+	*	向无缓冲channel写数据, 如果没有其他goroutine来拿走这个数据，那么goroutine阻塞
+	
+1.	缓冲channel
+
+	使用make创建channel时，加上channel的容量，创建的就是带缓冲的channel。
+	
+	```go
+	var ch chan int = make (chan int, 5)
+	
+	ch1 := make(chan int, 5)
+	```
+
+	带缓冲的channel不仅能够控制数据流，而且还能存储数据，在channel未满时，写channel不会
+	阻塞，在channel不为空时，读channel不会阻塞，其他情况会阻塞
+	
+1.	信道数据的读取和关闭
+
+	使用range读取channel中的数据，使用select管理多个channel，数据发送者使用close关闭channel
+	
+	range作用于channel，直到channel被关闭
+	
+	```go
+	package main
+
+	import (
+		"fmt"
+		"strconv"
+	)
+	
+	func makeBiscuitsThenSend(cs chan string, count int) {
+		for i := 1; i <= count; i++ {
+			biscuitsName := "Strawberry Biscuits " + strconv.Itoa(i)
+			cs <- biscuitsName //send a strawberry cake
+		}
+		close(cs)
+	}
+	
+	func receiveBiscuitsAndPack(cs chan string) {
+		for s := range cs {
+			fmt.Println("Packing received biscuits: ", s)
+		}
+	}
+	
+	func main() {
+		cs := make(chan string)
+		go makeBiscuitsThenSend(cs, 5)
+		receiveBiscuitsAndPack(cs)
+	}
+	```
+	
+	select用于检测channel是否读写就绪，通常配合for进行轮询
+	
+	```go
+	package main
+
+	import (
+		"fmt"
+		"strconv"
+	)
+	
+	func makeBiscuitsThenSend(cs chan string, flavor string, count int) {
+		for i := 1; i <= count; i++ {
+			biscuitsName := flavor + " Biscuits " + strconv.Itoa(i)
+			cs <- biscuitsName //send a Biscuits
+		}
+		close(cs)
+	}
+	
+	func receiveBiscuitsAndPack(strbry_cs chan string, choco_cs chan string) {
+		strbry_closed, choco_closed := false, false
+	
+		for {
+			//if both channels are closed then we can stop
+			if strbry_closed && choco_closed {
+				return
+			}
+			fmt.Println("Waiting for a new Biscuits ...")
+			select {
+			case biscuitsName, strbry_ok := <-strbry_cs:
+				if !strbry_ok {
+					strbry_closed = true
+					fmt.Println(" ... Strawberry channel closed!")
+				} else {
+					fmt.Println("Received from Strawberry channel.  Now packing", biscuitsName)
+				}
+			case biscuitsName, choco_ok := <-choco_cs:
+				if !choco_ok {
+					choco_closed = true
+					fmt.Println(" ... Chocolate channel closed!")
+				} else {
+					fmt.Println("Received from Chocolate channel.  Now packing", biscuitsName)
+				}
+			}
+		}
+	}
+	
+	func main() {
+		strbry_cs := make(chan string)
+		choco_cs := make(chan string)
+	
+		//two Biscuits makers
+		go makeBiscuitsThenSend(choco_cs, "Chocolate", 3)   //make 3 chocolate Biscuits and send
+		go makeBiscuitsThenSend(strbry_cs, "Strawberry", 4) //make 3 strawberry Biscuits and send
+	
+		//one Biscuits receiver and packer
+		receiveBiscuitsAndPack(strbry_cs, choco_cs) //pack all Biscuits received on these cake channels
+	}
+	```
+	
+	
+	
+	
 
 
 
