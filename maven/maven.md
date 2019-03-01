@@ -46,3 +46,78 @@ dependency:copy-dependencies*， 则是运行dependency这个plugin中的copy-de
 
 
 
+--------
+maven
+
+goal : 实现特定目的的对象
+plugin: goal的集合，实现特定功能
+phase：构建过程中的某一个步骤，构建过程可以是一些列有序phase的集合，例如，一个构建过程可能包括如下有序
+phase：预处理、汇编、编译、打包。maven执行某一个phase的时，会将上游的phase也一起执行，比如在例子中的
+构建过程中执行编译phase，那么会依次执行预处理、汇编、编译这三个phase
+
+artifact：只一个maven项目，每个artifact都有一个artifactid
+
+pom.xml： maven项目的配置文件
+
+archetype mechanism，创建maven工程的机制，使用一套模板来创建maven工程
+
+build lifecycle
+
+执行构建的步骤集合
+
+三种build lifecycle及其组成phrase
+
+default
+
+    validate
+    compile
+    test
+    package
+    verify
+    install
+    deploy
+
+clean
+
+site
+
+
+phase功能是由特定的goal去实现的，也就是说phase通过绑定goal，来实现其功能
+
+goal可以脱离build lifecycle，独立运行
+
+一个phase可以绑定一个或多个goal，也可以不绑定goal，没有绑定goal的phase是空phase，也就是没有任何功能
+
+
+pom
+
+A POM requires that its groupId, artifactId, and version be configured. These three values form the project's fully qualified artifact name
+
+maven的配置文件，xml格式，pom中常见的元素
+
+dependencies
+developers and contributors
+plugin lists (including reports)
+plugin executions with matching ids
+plugin configuration
+resources
+
+
+<exclusions>
+        <exclusion>
+          <groupId>com.google.protobuf</groupId>
+          <artifactId>protobuf-java</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.apache.commons</groupId>
+          <artifactId>commons-lang3</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-log4j12</artifactId>
+        </exclusion>
+      </exclusions>
