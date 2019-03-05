@@ -31,7 +31,7 @@ Instance为角色，为可选项， Realm为域名，例如：
 
 ### Ticket
 
-用户访问域中某项服务的凭据，ticket被服务提供方的密码加密，主要包含以下内容：
+用户访问域中某项服务的凭据，**ticket被服务提供方的密码加密**，主要包含以下内容：
 *   The requesting user's principal ;
 *   The principal of the service it is intended for;
 *   The IP address of the client machine from which the ticket can be used. 
@@ -91,7 +91,7 @@ Kerberos协议中使用principal来标识用户，使用ticket来作为用户的
 
     TGS首先用自己的密码解密TGT，做如下检验：
     
-    1.  根据TGT中的时间戳，判断TGS是否过期， 如果过期，则认证失败，
+    1.  根据TGT中的时间戳，判断TGT是否过期， 如果过期，则认证失败，
     1.  判断TGT中的client ip是否等于TGS_REQ中的ip，如果不相等，认证失败
     1.  ...
 
@@ -132,3 +132,19 @@ Kerberos协议中使用principal来标识用户，使用ticket来作为用户的
     和自己的sessionkey<ApplicationServer>是否一致，确认无误后，整个认证成功，通过AP_REP，client也完成了
     对application server的认证
 
+### 几个解释
+
+1.  什么是TGT？有什么用？
+
+    TGT(Ticket Granting Ticket)，叫做票据授权票，由KDC发放给client，client用TGT向KDC申请票，由于要访问
+    某项服务，就要向KDC申请该服务的票，如果一个用户要访问多个服务，那就要多次申请票，每次申请票的时候，都要
+    输入用户密码，或者当用户的票过期的时候，需要重新申请票，就要重新输入密码，这样很不方便，为了实现SSO，
+    Kerberos设计了TGT，使用有效的TGT，就能申请服务的票。
+
+1.  authenticator有什么用？
+
+    用户只要拥有服务的票，就能访问服务，并且票的生存期一般有数天，假如票被盗取，就会造成安全风险，为了解决这个
+    问题，Kerberos使用一个client和application server之间的session key作为加密key，加密client的信息：principal，
+    ip地址等等，得到一个authenticator，向application server认证时，必须同时提供票和authenticator（相当于双因子
+    认证），并且authenticator的生存期更短，默认为2分钟，application server同时保存最近2分钟收到的authenticator，
+    这样authenticator的副本也是无效的，authenticator能让Kerberos更安全。
