@@ -1,8 +1,12 @@
 # Kerberos
 
+--------
+
 ## 概述
 
-一种认证协议，在公共、存在安全风险网络环境中，为面向连接的应用，提供认证服务。Kerberos认证具有以下特点：
+一种认证协议，在公共、存在安全风险网络环境中，为面向连接的应用，提供
+[认证服务。](https://github.com/zhangchenwhu/zhangchen/blob/master/authentication_authorization/authenticaton_and_authorization.md)
+Kerberos认证具有以下特点：
 
 1.  用户的密码不会在网络上传输
 1.  用户的密码不会在客户端上以任何形式保存
@@ -12,6 +16,8 @@
 1.  支持双向认证
 1.  支持数据加密
 1.  需要依赖一个第三方安全节点
+
+--------
 
 ## 核心概念
 
@@ -40,6 +46,8 @@ Instance为角色，为可选项， Realm为域名，例如：
 *   The session key (this has a fundamental role which is described below);
 
 Kerberos协议中使用principal来标识用户，使用ticket来作为用户的凭据
+
+--------
 
 ## 认证过程
 
@@ -148,3 +156,36 @@ Kerberos协议中使用principal来标识用户，使用ticket来作为用户的
     ip地址等等，得到一个authenticator，向application server认证时，必须同时提供票和authenticator（相当于双因子
     认证），并且authenticator的生存期更短，默认为2分钟，application server同时保存最近2分钟收到的authenticator，
     这样authenticator的副本也是无效的，authenticator能让Kerberos更安全。
+
+--------
+
+## 实现
+
+1.  [MIT实现](https://github.com/krb5/krb5)
+
+1.  [heimdal实现](https://github.com/heimdal/heimdal)
+
+--------
+
+## 如何应用
+
+直接使用Kerberos API相当繁琐，实际开发中，会将Kerberos作为SASL框架下的一种认证机制，在
+[SASL](https://github.com/zhangchenwhu/zhangchen/blob/master/authentication_authorization/sasl/sasl.md)
+框架下开发，包括客户端和服务端。
+
+### 使用Kerberos的项目
+
+1.  hbase
+1.  hdoop
+1.  hive
+1.  spark
+1.  ....
+
+--------
+
+## 参考
+
+1.  [http://kerberos.org/software/tutorial.html](http://kerberos.org/software/tutorial.html)
+1.  [https://web.mit.edu/kerberos/]
+1.  [https://tools.ietf.org/html/rfc4120](https://tools.ietf.org/html/rfc4120)
+1.  [https://www.rfc-editor.org/rfc/rfc1964.txt](https://www.rfc-editor.org/rfc/rfc1964.txt)
