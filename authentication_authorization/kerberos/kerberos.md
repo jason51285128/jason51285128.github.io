@@ -5,7 +5,7 @@
 ## 概述
 
 一种认证协议，在公共、存在安全风险网络环境中，为面向连接的应用，提供
-[认证服务。](https://github.com/zhangchenwhu/zhangchen/blob/master/authentication_authorization/authenticaton_and_authorization.md)
+[认证服务。](../authenticaton_and_authorization.md)
 Kerberos认证具有以下特点：
 
 1.  用户的密码不会在网络上传输
@@ -170,7 +170,7 @@ Kerberos协议中使用principal来标识用户，使用ticket来作为用户的
 ## 如何应用
 
 直接使用Kerberos API相当繁琐，实际开发中，会将Kerberos作为SASL框架下的一种认证机制，在
-[SASL](https://github.com/zhangchenwhu/zhangchen/blob/master/authentication_authorization/sasl/sasl.md)
+[SASL](../sasl/sasl.md)
 框架下开发，包括客户端和服务端。
 
 ### 使用Kerberos的项目
