@@ -25,7 +25,7 @@ Kerberos认证具有以下特点：
 
 需要进行认证的主机集合，域由域名标识，域名的格式类似dns域名，但是大小写敏感，并且一般用大写，例如：EXAMPLE.COM
 
-### Pricipal
+### Principal
 
 相当于用户名，标识一个域中的主机、服务等等，principal的格式为：*Name[/Instance]@REALM*，Name标识用域名，
 Instance为角色，为可选项， Realm为域名，例如：
