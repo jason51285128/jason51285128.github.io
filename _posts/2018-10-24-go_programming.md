@@ -712,6 +712,11 @@ func main() {
 	
 1.	信道数据的读取和关闭
 
+	往一个已关闭的channel写数据，会导致panic，读一个已经关闭的channel，如果channel中
+	有数据，则返回数据，否则，返还管道已关闭， 所以**读写一个关闭的channel永远不会导致阻塞**
+
+	读写一个nil的channel，会导致永久阻塞，所以**读写一个nil的channel将导致永久阻塞**
+
 	使用range读取channel中的数据，使用select管理多个channel，数据发送者使用close关闭channel
 	
 	range作用于channel，直到channel被关闭
