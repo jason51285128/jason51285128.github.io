@@ -1,9 +1,22 @@
 ---
 layout: post
-title: shell编程
+title: shell教程
 categories: linux
 tags: shell
 ---
+
+# chapter1 简介
+
+shell时Linux中负责用户和操作系统交互的程序，它从标准输入或者文件中读取用户命令，
+然后将结果输出到标准输出或者文件，有自己的内置命令和语法规则，本质是一个解释器，使用
+shell语法编写的程序叫做shell脚本。shell后来被Linux工作组标准化，常见的shell实现有sh、
+bash、ksh、csh，其中bash使用最广泛，本教程适用bash环境，其他shell环境基本类似。
+
+--------
+
+
+
+
 
 1.	 重定向
 	* 	标准输入文件描述符：0
