@@ -186,10 +186,23 @@ var ha = new Haski("Ha");
 ## module
 
 每个文件相当于一个module
-
 module 通过exports对象，暴露方法或者对象，module中的变量是私有的，对外不可见
-
 module 通过require被引用
+
+````javascript
+//module原型
+module = {
+  exports: {
+
+  }
+};
+exports = module.exports;
+
+//quire 原型
+function require() {
+  return module.exports;
+}
+````
 
 import 和 require 有同样的效果
 
