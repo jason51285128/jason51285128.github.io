@@ -5,7 +5,13 @@ categories: linux
 tags: shell
 ---
 
-# chapter1 简介
+# shell编程
+
+## 前言
+
+本文所描述的特性，适用Bash shell(version 5.0, 12 May 2019)
+
+## 简介
 
 shell时Linux中负责用户和操作系统交互的程序，它从标准输入或者文件中读取用户命令，
 然后将结果输出到标准输出或者文件，有自己的内置命令和语法规则，本质是一个解释器，使用
@@ -14,6 +20,11 @@ bash、ksh、csh，其中bash使用最广泛，本教程适用bash环境，其�
 
 --------
 
+## 基础特性 
+
+### shell语法
+
+[](http://m.blog.chinaunix.net/uid-12072359-id-2960874.html)
 
 
 
