@@ -53,7 +53,7 @@ CR0寄存器中的PE标志位，用于控制是否使用分段机制，置位，
 
 ### 分页地址转换过程
 
-![地址转换过程]()({{site.baseurl}}/assets/images/os_mm_virtualize_10.png)
+![地址转换过程]({{site.baseurl}}/assets/images/os_mm_virtualize_10.png)
 
 ### 页目录地址和缺页异常
 
