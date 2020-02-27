@@ -18,7 +18,7 @@ tags: [os, linux, kernel, virtualize, mechanism]
 
 ### 段选择符
 
-![](段选择符)({{site.baseurl}}/assets/images/os_mm_virtualize_04.png)
+![段选择符]({{site.baseurl}}/assets/images/os_mm_virtualize_04.png)
 
 1.  RPL： 请求优先级
 1.  TI： 0，索引GDT， 1，索引LDT
