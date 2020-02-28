@@ -26,7 +26,7 @@ tags: 设计模式
 
 ## 时序图
 
-![时序图](https://blog.csdn.net/fly_zxy/article/details/80911942)
+[时序图](https://blog.csdn.net/fly_zxy/article/details/80911942)
 
 
 角色，对象，生命线，控制焦点，消息，自关联消息，组合片段
