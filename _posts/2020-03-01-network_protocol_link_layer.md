@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 计算机网络之链路层
-categories: network protocol
+categories: [network protocol]
 tags: [network protocol, link layer] 
 ---
 

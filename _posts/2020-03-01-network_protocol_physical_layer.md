@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 计算机网络之物理层 
-categories: network protocol
+categories: [network protocol]
 tags: [network protocol, physical layer] 
 ---
 
