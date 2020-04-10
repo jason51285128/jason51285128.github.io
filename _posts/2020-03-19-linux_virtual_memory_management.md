@@ -26,24 +26,24 @@ ps -o majflt,minflt -p <pid>
 majflt 表示需要读写磁盘，可能是内存对应页面在磁盘中需要 load 到物理内存中，
 也可能是此时物理内存不足，需要淘汰部分物理页面至磁盘中。
 
-[Linux的进程地址空间一](https://zhuanlan.zhihu.com/p/66794639)
-[Linux的进程地址空间二](https://zhuanlan.zhihu.com/p/67936075)
-[Linux的进程地址空间三](https://zhuanlan.zhihu.com/p/68398179)
+1.  [Linux的进程地址空间一](https://zhuanlan.zhihu.com/p/66794639)
+1.  [Linux的进程地址空间二](https://zhuanlan.zhihu.com/p/67936075)
+1.  [Linux的进程地址空间三](https://zhuanlan.zhihu.com/p/68398179)
 
 
 ## 内存分配器
 
 ### dlmalloc
 
-[内部实现参考1](https://blog.csdn.net/txx_683/article/details/53456357?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)
-[内部实现参考2](https://blog.csdn.net/txx_683/article/details/53456661?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)
-[内部实现参考3](https://blog.csdn.net/vector03/article/details/40977679)
-[内部实现参考4](https://blog.csdn.net/vector03/article/details/40979181)
-[内部实现参考5](https://blog.csdn.net/vector03/article/details/41008671)
-[内部实现参考6](https://blog.csdn.net/vector03/article/details/41074005)
-[内部实现参考7](https://blog.csdn.net/vector03/article/details/41114611)
-[内部实现参考8](https://blog.csdn.net/vector03/article/details/41205355)
-[内部实现参考9](https://blog.csdn.net/vector03/article/details/41314055)
+1.  [内部实现参考1](https://blog.csdn.net/txx_683/article/details/53456357?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)
+1.  [内部实现参考2](https://blog.csdn.net/txx_683/article/details/53456661?depth_1-utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task)
+1.  [内部实现参考3](https://blog.csdn.net/vector03/article/details/40977679)
+1.  [内部实现参考4](https://blog.csdn.net/vector03/article/details/40979181)
+1.  [内部实现参考5](https://blog.csdn.net/vector03/article/details/41008671)
+1.  [内部实现参考6](https://blog.csdn.net/vector03/article/details/41074005)
+1.  [内部实现参考7](https://blog.csdn.net/vector03/article/details/41114611)
+1.  [内部实现参考8](https://blog.csdn.net/vector03/article/details/41205355)
+1.  [内部实现参考9](https://blog.csdn.net/vector03/article/details/41314055)
 
 ### ptmalloc2
 
