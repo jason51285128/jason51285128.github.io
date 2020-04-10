@@ -72,6 +72,10 @@ categories: 面试
         B *pb = (B*) pa;
         pb->foo();
         pb->bar();
+	
+	//expect
+	//foo in A
+	//bar in B
         ````
 
         ````c++
@@ -94,6 +98,8 @@ categories: 面试
 
         A* p=new D;
         p->func()
+	//expect
+	//func in C
         ````
     
     1.  operator new 和new operator有什么区别？当没有足够的内存时，new会怎么处理？
