@@ -211,7 +211,12 @@ function require() {
 }
 ````
 
-import 和 require 有同样的效果
+import 相当于require('moduleid').default
+
+````javascript
+import vue from 'vue' //相当于
+var vue = require('vue').default
+````
 
 ## Promise
 
@@ -228,8 +233,135 @@ import 和 require 有同样的效果
 创建一个vue实例，只需再vue构造函数中传入一个对象即可
 组件也是一个vue实例，所以组件需要导出一个对象，以供动态创建vue对象
 
+[vue中name的作用](https://blog.csdn.net/Uookic/article/details/80420472)
 
 ## 参考连接
 
 * [原型链](https://segmentfault.com/a/1190000004700001)
 * [继承](https://segmentfault.com/a/1190000003017751)
+
+## 严格模式
+
+使用use strict声明严格模式，[严格模式介绍](https://www.runoob.com/js/js-strict.html)
+
+## require加载规则
+使用require来加载文件时可以省略扩展名。比如require('./module')，则对应的加载顺序为，
+
+1.  按js文件来执行（先找对应路径当中的module.js文件来加载）
+1.  按json文件来解析（若上面的js文件找不到时，则找对应路径当中的module.json文件来加载）
+1.  按照预编译好的c++模块来执行（寻找对应路径当中的module.node文件来加载）
+1.  若参数字符串为一个目录（文件夹）的路径，则自动先查找该文件夹下的package.json文件，然后再再加载该文件当中main字段所指定的入口文件。（若package.json文件当中没有main字段，或者根本没有package.json文件，则再默认查找该文件夹下的index.js文件作为模块来载入。）
+
+
+## 语法糖
+
+当直接使用变量的变量名作为 key 时，可以直接省略 key
+````javascript
+var x1='hello'
+var x2='world'
+var o = {
+  x1,
+  x2
+}
+console.log(o)
+````
+
+## promise
+
+表示一个异步操作，这个操作要么成功，成功则返还一个对象，要么失败，失败则返还原因，
+成功时，叫做resolve，对象，失败时，叫做reject，拒绝。
+
+1.  构造
+
+   ````javascript
+   var promise1 = new Promise(function(resolve, reject){
+     //异步操作，通常为io操作
+     if (success) {
+       resolve(object)
+     } else {
+       reject(err)
+     }
+   });
+   ````
+2. 使用
+
+  生产者负责对promise经行resolve或者reject
+  消费者设置回调
+
+  ````javascript
+  const promise1 = new Promise(function(resolve, reject) {
+  setTimeout(function() {
+    resolve('foo');
+  }, 300);
+});
+
+promise1.then(function(value) {
+  console.log(value);
+  // expected output: "foo"
+});
+
+console.log(promise1);
+// expected output: [object Promise]
+  ````
+
+3. 嵌套 Promise 是一种可以限制 catch 语句的作用域的控制结构写法。明确来说，嵌套的 catch 仅捕捉在其之前同时还必须是其作用域的 failureres，而捕捉不到在其链式以外或者其嵌套域以外的 error。如果使用正确，那么可以实现高精度的错误修复。 
+
+````javascript
+doSomethingCritical()
+.then(result => doSomethingOptional()
+  .then(optionalResult => doSomethingExtraNice(optionalResult))
+  .catch(e => {console.log(e.message)})) // 即使有异常也会忽略，继续运行;(最后会输出)
+.then(() => moreCriticalStuff())
+.catch(e => console.log("Critical failure: " + e.message));// 没有输出
+````
+
+[参考](https://zhuanlan.zhihu.com/p/29783901)
+
+## 本地存储
+
+1.  sessionStorage
+  
+    临时保存同一窗口(或标签页)的数据，在关闭窗口或标签页之后将会删除这些数据
+
+1.  localStorage
+   
+   浏览器窗口关闭后还保留数据
+
+##  函数的默认参数和可选参数
+
+1.  默认参数
+
+````javascript
+f = function (a, b=1) {
+  console.log(a,b)
+}
+````
+
+1. 可选参数
+
+````javascript
+f = function (a, b=1, options) {
+  console.log(a,b,options.c || 0)
+}
+````
+
+## 遍历对象
+
+````javascript
+//1
+obj = {a: 1, b:2, c:3}
+Object.keys(obj).forEach(function(k){
+  console.log(obj[k])
+})
+
+//2
+for (k in obj) {
+  console.log(obj[k])
+}
+````
+
+
+## 箭头表达式
+
+(param1, param2, …, paramN) => expression
+//相当于：(param1, param2, …, paramN) =>{ return expression; }
