@@ -1,10 +1,11 @@
 ---
 layout: post
-title: go学习笔记
+title: effective go 
 categories: go
+tags: [go programming]
 ---
 
-# go学习笔记
+# effective go 
 
 ## go的工作区
 
@@ -809,9 +810,100 @@ func main() {
 	}
 	```
 	
+--------
+
+## 嵌入
+
+### 接口嵌入
+
+````go
+type Reader interface {
+    Read(p []byte) (n int, err error)
+}
+
+type Writer interface {
+    Write(p []byte) (n int, err error)
+}
+
+// ReadWriter is the interface that combines the Reader and Writer interfaces.
+type ReadWriter interface {
+    Reader
+    Writer
+}
+````
+
+##  结构体嵌入
+
+````go
+// ReadWriter stores pointers to a Reader and a Writer.
+// It implements io.ReadWriter.
+type ReadWriter struct {
+    *Reader  // *bufio.Reader
+    *Writer  // *bufio.Writer
+}
+````
+
+只需声明类型，不定义变量名
+
+嵌入某一种类型，则集成类该类型的所有方法
+
+可以重定义嵌入类型的方法
+
+可以使用类型名引用嵌入的变量
+
+当结构体出现和嵌入类型同名的变量名时，通常会导致错误，除非该重复定义的变量在程序中未被引用
 	
-	
-	
+--------
+
+## 协程VS线程
+
+### 什么时协程
+
+A goroutine has a simple model: it is a function executing concurrently 
+with other goroutines in the same address space. It is lightweight, 
+costing little more than the allocation of stack space. 
+And the stacks start small, so they are cheap, and grow by 
+allocating (and freeing) heap storage as required.
+
+
+Goroutines are multiplexed onto multiple OS threads so if one should block, 
+such as while waiting for I/O, others continue to run. Their design hides many 
+of the complexities of thread creation and management.
+
+
+### 理解
+
+协程是为了优化并发模型，减少多进程、多线程模型中创建和上下文切换的开销。
+
+**并发模型比较**
+
+1. 多进程
+    继承创建开销大： 创建PCB，拷贝页目录、页表，初始化文件描述符、信号等等
+    进程调度开销大： 上下文切换、地址空间切换、CPU缓存刷新
+
+1.  多线程
+    创建上：共享进程的地址空间，减少创建开销
+    调度上：线程之间切换，无序上下文切换，但是线程和另外一个进程切换时，依然会发送上下文切换
+
+1.  协程
+
+    共享线程的地址空间，进一步减少创建和调度的开销，协程之间的调度由用户自己实现，
+    golang便实现了协程之间的调度
+
+协程正是通过复用线程，来进一步减少创建和上下文切换的开销，同时自己实现一套协程调度的机制（
+操作系统没有实现协程的调度），来提供并发编程的能力，这个线程池的机制是类似的，所以协程又
+称为用户态线程
+
+### golang中协程的调度
+
+
+什么时候调度
+
+
+怎么调度
+
+
+
 
 
 
